@@ -1,0 +1,50 @@
+version: "3.9"
+
+services:
+  user_deck:
+    build:
+      context: ./user_deck
+    ports:
+      - "8001:8001"
+    environment:
+      - PYTHONUNBUFFERED=1
+    restart: unless-stopped
+
+  card:
+    build:
+      context: ./card
+    ports:
+      - "8002:8002"
+    environment:
+      - PYTHONUNBUFFERED=1
+    restart: unless-stopped
+
+  game:
+    build:
+      context: ./game
+    ports:
+      - "8003:8003"
+    environment:
+      - PYTHONUNBUFFERED=1
+      - CARD_SERVICE_URL=http://card:8002
+      - DECK_SERVICE_URL=http://user_deck:8001
+    depends_on:
+      - card
+      - user_deck
+    restart: unless-stopped
+
+  gateway:
+    build:
+      context: ./gateway
+    ports:
+      - "8000:8000"
+    environment:
+      - PYTHONUNBUFFERED=1
+      - USER_DECK_URL=http://user_deck:8001
+      - CARD_URL=http://card:8002
+      - GAME_URL=http://game:8003
+    depends_on:
+      - user_deck
+      - card
+      - game
+    restart: unless-stopped
