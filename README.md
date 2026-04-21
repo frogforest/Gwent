@@ -83,7 +83,7 @@ services/
 
 ## Быстрый старт
 
-### Вариант 1: Docker Compose (рекомендуется)
+### Вариант 1: Docker Compose
 
 ```bash
 cd services
