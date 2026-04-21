@@ -1,6 +1,7 @@
 import pytest
 from fastapi.testclient import TestClient
 from unittest.mock import patch, Mock
+import app.storage as storage
 
 from app.main import app
 
@@ -30,7 +31,7 @@ class TestDeckServiceIntegration:
         resp = client.get("/cards/99999")
         assert resp.status_code == 404
         # Deck-сервис на основе 404 покажет пользователю ошибку
-    
+    storage.reset()
     def test_deck_service_filters_cards_for_collection(self):
         """Deck-сервис запрашивает все карты определённой фракции для UI."""
         # Создаём карты разных фракций
