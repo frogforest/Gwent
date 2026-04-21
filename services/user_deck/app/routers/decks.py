@@ -7,7 +7,7 @@ from app.http_client import card_exists
 from app.models import DeckCreate, DeckResponse
 import app.storage as storage
 
-router = APIRouter()
+router = APIRouter(prefix="", tags=["Decks"])
 
 
 def get_current_user_id(authorization: Optional[str]) -> int:

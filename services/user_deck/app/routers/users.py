@@ -5,7 +5,7 @@ from app.models import UserCreate, UserResponse, TokenResponse
 from app.auth import hash_password, verify_password, create_jwt, decode_jwt
 import app.storage as storage
 
-router = APIRouter()
+router = APIRouter(prefix="", tags=["Users"])
 
 
 @router.post("/register", response_model=UserResponse, status_code=201)
